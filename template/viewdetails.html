@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Delivery Boy Details</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            background: linear-gradient(120deg, #f6d365 0%, #fda085 100%); 
+        }
+        .container {
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        h2 {
+            font-weight: 700;
+            color: #343a40;
+        }
+        table {
+            margin-top: 20px;
+        }
+        table th, table td {
+            vertical-align: middle;
+        }
+        .table-bordered th {
+            background-color: #f0f0f0;
+        }
+        .btn-primary {
+            background-color: #007bff;
+            border-color: #007bff;
+        }
+        .btn-primary:hover {
+            background-color: #0056b3;
+            border-color: #004085;
+        }
+        .back-button {
+            display: flex;
+            justify-content: center;
+            margin-top: 20px;
+        }
+        .img-thumbnail {
+            border-radius: 10px;
+            max-width: 100%;
+            height: auto;
+        }
+        .no-photo {
+            color: #6c757d;
+            font-style: italic;
+        }
+    </style>
+    
+</head>
+<body>
+    <div class="container mt-5">
+        <h2 class="text-center my-4"><i class="fas fa-id-badge"></i> Delivery Boy Details</h2>
+        <table class="table table-bordered table-hover">
+            <tr>
+                <th><i class="fas fa-hashtag"></i> ID</th>
+                <td>{{ delivery_boy.id }}</td>
+            </tr>
+            <tr>
+                <th><i class="fas fa-user"></i> Username</th>
+                <td>{{ delivery_boy.user.username }}</td>
+            </tr>
+            <tr>
+                <th><i class="fas fa-envelope"></i> Email</th>
+                <td>{{ delivery_boy.user.email }}</td>
+            </tr>
+            <tr>
+                <th><i class="fas fa-envelope"></i> Status</th>
+                <td>
+                    <span class="envelope 
+                        {% if delivery_boy.status == 'Offline' %}
+                            bg-secondary
+                        {% elif delivery_boy.status == 'Available' %}
+                            bg-success
+                        {% elif delivery_boy.status == 'On Route' %}
+                            bg-warning
+                        {% endif %}
+                    ">
+                        {{ delivery_boy.status }}
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <th><i class="fas fa-id-card"></i> License Photo</th>
+                <td>
+                    {% if delivery_boy.license_photo %}
+                        <img src="{{ delivery_boy.license_photo.url }}" alt="License Photo" class="img-thumbnail" style="max-width: 200px;">
+                    {% else %}
+                        <span class="no-photo">No license photo available.</span>
+                    {% endif %}
+                </td>
+            </tr>
+            <tr>
+                <th><i class="fas fa-book"></i> RC Book Photo</th>
+                <td>
+                    {% if delivery_boy.rc_book_photo %}
+                        <img src="{{ delivery_boy.rc_book_photo.url }}" alt="RC Book Photo" class="img-thumbnail" style="max-width: 200px;">
+                    {% else %}
+                        <span class="no-photo">No RC book photo available.</span>
+                    {% endif %}
+                </td>
+            </tr>
+        </table>
+        <div class="back-button">
+            <a href="{% url 'delivery_boy_management' %}" class="btn btn-primary"><i class="fas fa-arrow-left"></i> Back to Delivery Boys</a>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.7/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js"></script>
+</body>
+</html>

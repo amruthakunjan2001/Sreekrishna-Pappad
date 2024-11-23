@@ -1,0 +1,367 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+        <meta charset="utf-8">
+        <title>Sreekrishna Pappad - pappad Website Template</title>
+        <meta content="width=device-width, initial-scale=1.0" name="viewport">
+        <meta content="" name="keywords">
+        <meta content="" name="description">
+
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&family=Raleway:wght@600;800&display=swap" rel="stylesheet"> 
+
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css"/>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
+
+        <link href="{% static 'lib/lightbox/css/lightbox.min.css' %}" rel="stylesheet">
+        <link href="{% static 'lib/owlcarousel/assets/owl.carousel.min.css' %}" rel="stylesheet">
+
+
+        <link href= "{% static 'css/bootstrap.css' %}" rel="stylesheet">
+
+        <link href="{% static 'css/style.css' %}" rel="stylesheet">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    </head>
+
+    <body>
+
+
+
+        <div class="container-fluid fixed-top">
+            <div class="container topbar bg-primary d-none d-lg-block">
+                 <div class="d-flex justify-content-between">
+                    
+                </div>
+            </div>
+            <div class="container px-0">
+                <nav class="navbar navbar-light bg-white navbar-expand-xl">
+                    <a href="" class="navbar-brand"><h1 class="text-primary display-6">Sreekrishna Pappad</h1></a>
+                    <button class="navbar-toggler py-2 px-3" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
+                        <span class="fa fa-bars text-primary"></span>
+                    </button>
+                    <div class="collapse navbar-collapse bg-white" id="navbarCollapse">
+                        <div class="navbar-nav mx-auto">
+                            <div class="navbar-nav mx-auto">
+                                <a href="{% url 'index' %}" class="nav-item nav-link active">Home</a>
+                                <a href="{% url 'shop' %}" class="nav-item nav-link">Shop</a>
+                                
+                                {% if not user.is_authenticated %}
+                                    <a href="{% url 'register' %}" class="nav-item nav-link">Register</a>
+                                    <a href="{% url 'login' %}" class="nav-item nav-link">Login</a>
+                                {% endif %}
+                                
+                                <a href="{% url 'cart' %}" class="nav-item nav-link">
+                                    <i style="font-size:15px" class="fas fa-shopping-cart"></i> 
+                                </a>
+                                <a href="{% url 'contact' %}" class="nav-item nav-link">Contact</a>
+                            
+                                {% if user.is_authenticated %}
+                                    {% if user.is_superuser %}
+                                        <a href="{% url 'blank' %}" class="nav-item nav-link">
+                                            <i style='font-size:24px' class='fas'>&#xf508;</i>
+                                        </a>
+                                    {% elif user.deliveryboy %}
+                                        <a href="{% url 'delivery_boy_dashboard' %}" class="nav-item nav-link">
+                                            <i style="font-size:24px" class="fa">&#xf21c;</i>
+
+                                        </a>
+                                    {% else %}
+                                        <a href="{% url 'user' %}" class="nav-item nav-link">
+                                            <i style='font-size:24px' class='far'>&#xf2bd;</i>
+                                        </a>
+                                    {% endif %}
+                                    <a href="{% url 'logout' %}" class="nav-item nav-link">Logout</a>
+                                {% endif %}
+                            </div>
+                            
+                        
+                        
+                            
+                     
+                    </div>
+                </nav>
+            </div>
+        </div>
+
+
+        
+
+
+        <div class="container-fluid py-5 mb-5 hero-header">
+            <div class="container py-5">
+                <div class="row g-5 align-items-center">
+                    <div class="col-md-12 col-lg-7">
+                        <h1 class="mb-3 text-secondary">Home made Pappad</h1>
+                        <h4 class="mb-5 display-3 text-primary">No chemicals or preservatives added</h4>
+                        
+                    </div>
+                    <div class="col-md-12 col-lg-5">
+                        <div id="carouselId" class="carousel slide position-relative" data-bs-ride="carousel">
+                            <div class="carousel-inner" role="listbox">
+                                <div class="carousel-item active rounded">
+                                    <img src="{% static 'img/sadhya.jpg' %}" class="img-fluid w-100 h-100 bg-secondary rounded" alt="First slide">
+                                    
+                                </div>
+                                <div class="carousel-item rounded">
+                                    <img src="{% static 'img/home made.jpg' %}" class="img-fluid w-100 h-100 rounded" alt="Second slide">
+                                </div>
+                                <div class="carousel-item rounded">
+                                    <img src="{% static 'img/pappadam 1.jpg' %}" class="img-fluid w-100 h-100 rounded" alt="Second slide">
+                                </div>
+                            </div>
+                            <button class="carousel-control-prev" type="button" data-bs-target="#carouselId" data-bs-slide="prev">
+                                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                <span class="visually-hidden">Previous</span>
+                            </button>
+                            <button class="carousel-control-next" type="button" data-bs-target="#carouselId" data-bs-slide="next">
+                                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                <span class="visually-hidden">Next</span>
+                            </button>
+                        </div>
+                    </div>
+                    
+                </div>
+            </div>
+        </div>
+
+
+        <div class="container-fluid featurs py-5">
+            <div class="container py-5">
+                <div class="row g-4">
+                    <div class="col-md-6 col-lg-3">
+                        <div class="featurs-item text-center rounded bg-light p-4">
+                            <div class="featurs-icon btn-square rounded-circle bg-secondary mb-5 mx-auto">
+                                <i class='fas fa-motorcycle' style='font-size:48px;color:brown'></i>
+                            </div>
+                            <div class="featurs-content text-center">
+                                <h5>Home delivery</h5>
+                                <p class="mb-0">Free on order</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-lg-3">
+                        <div class="featurs-item text-center rounded bg-light p-4">
+                            <div class="featurs-icon btn-square rounded-circle bg-secondary mb-5 mx-auto">
+                                <i class="fas fa-user-shield fa-3x text-white"></i>
+                            </div>
+                            <div class="featurs-content text-center">
+                                <h5>Security Payment</h5>
+                                <p class="mb-0">100% security payment</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-lg-3">
+                        <div class="featurs-item text-center rounded bg-light p-4">
+                            <div class="featurs-icon btn-square rounded-circle bg-secondary mb-5 mx-auto">
+                                <i class="fas fa-exchange-alt fa-3x text-white"></i>
+                            </div>
+                            <div class="featurs-content text-center">
+                                <h5>Return Option</h5>
+                                <p class="mb-0">30 day money guarantee</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-lg-3">
+                        <div class="featurs-item text-center rounded bg-light p-4">
+                            <div class="featurs-icon btn-square rounded-circle bg-secondary mb-5 mx-auto">
+                                <i class="fa fa-phone-alt fa-3x text-white"></i>
+                            </div>
+                            <div class="featurs-content text-center">
+                                <h5>24/7 Support</h5>
+                                <p class="mb-0">Support every time fast</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        
+
+
+        <div class="container-fluid service py-5">
+            <div class="container py-5">
+                <div class="row g-4 justify-content-center">
+                    <div class="col-md-6 col-lg-4">
+                        <a href="#">
+                            <div class="service-item bg-secondary rounded border border-secondary">
+                                <img src="{% static 'img/home.jpg' %}" class="img-fluid rounded-top w-100" alt="">
+                                <div class="px-4 rounded-bottom">
+                                    <div class="service-content bg-primary text-center p-4 rounded">
+                                        <h3 class="mb-0">Eat Healthy</h3>
+                                        <h3 class="mb-0">Stay Healthy</h3>
+                                    </div>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="col-md-6 col-lg-4">
+                        <a href="#">
+                            <div class="service-item bg-dark rounded border border-dark">
+                                <img src="{% static 'img/papp3.jpg' %}" class="img-fluid rounded-top w-100" alt="">
+                                <div class="px-4 rounded-bottom">
+                                    <div class="service-content bg-light text-center p-4 rounded">
+                                        <h5 class="text-primary">Homemade</h5>
+                                        <h3 class="mb-0">Natural Ingredients</h3>
+                                    </div>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="col-md-6 col-lg-4">
+                        <a href="#">
+                            <div class="service-item bg-primary rounded border border-primary">
+                                <img src="{% static 'img/delivery.jpg' %}" class="img-fluid rounded-top w-100" alt="">
+                                <div class="px-4 rounded-bottom">
+                                    <div class="service-content bg-secondary text-center p-4 rounded">
+                                        <h5 class="text-white">Home Delivery</h5>
+                                        <h3 class="mb-0">Fast and Free</h3>
+                                    </div>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        
+       
+
+        <div class="container-fluid py-5">
+            <div class="container">
+                <div class="bg-light p-5 rounded">
+                    <div class="row g-4 justify-content-center">
+                        <div class="col-md-6 col-lg-6 col-xl-3">
+                            <div class="counter bg-white rounded p-5">
+                                <i class="fa fa-users text-secondary"></i>
+                                <h4>satisfied customers</h4>
+                                
+                            </div>
+                        </div>
+                        <div class="col-md-6 col-lg-6 col-xl-3">
+                            <div class="counter bg-white rounded p-5">
+                                <i class="fa fa-users text-secondary"></i>
+                                <h4>GOOD QUALITY PRODUCTS</h4>
+                                
+                            </div>
+                        </div>
+                        <div class="col-md-6 col-lg-6 col-xl-3">
+                            <div class="counter bg-white rounded p-5">
+                                <i class="fa fa-users text-secondary"></i>
+                                <h4>DELIVERY OPTION AVAILABLE</h4>
+                                
+                            </div>
+                        </div>
+                        <div class="col-md-6 col-lg-6 col-xl-3">
+                            <div class="counter bg-white rounded p-5">
+                                <i class="fa fa-users text-secondary"></i>
+                                <h4>VARIETY PRODUCTS</h4>
+                                
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        
+
+        <div class="container-fluid bg-dark text-white-50 footer pt-5 mt-5">
+            <div class="container py-5">
+                <div class="pb-4 mb-4" style="border-bottom: 1px solid rgba(226, 175, 24, 0.5) ;">
+                    <div class="row g-4">
+                        <div class="d-flex justify-content-center align-items-center flex-column">
+                            <a href="#" class="text-center">
+                                <h1 class="text-primary mb-0">Sreekrishna Pappad</h1>
+                                <p class="text-secondary mb-0">Homemade Products</p>
+                            </a>
+                        </div>
+                        
+                       
+                    </div>
+                </div>
+                <div class="row g-5">
+                    <div class="col-lg-3 col-md-6">
+                        <div class="footer-item">
+                            <h4 class="text-light mb-3">Why People Love Us!</h4>
+                            <p class="mb-4 short-description">
+                                Our pappadams are crafted with the finest ingredients and traditional recipes, ensuring each bite is a delightful experience. Here’s why our customers keep coming back:
+                                <span class="more-text" style="display: none;">
+                                    Authentic Taste: Enjoy the rich flavors that remind you of home-cooked meals.<br>
+                                    Quality Ingredients: We use only the best, all-natural ingredients with no preservatives.<br>
+                                    Crispy Perfection: Our pappadams are expertly roasted to achieve that perfect crunch.<br>
+                                    Versatile Snack: Perfect as a standalone snack or paired with your favorite dips and dishes.<br>
+                                    Discover the joy of snacking with us!
+                                </span>
+                            </p>
+                            <a href="#" class="btn border-secondary py-2 px-4 rounded-pill text-primary" onclick="toggleDescription(event)">Read More</a>
+                        </div>
+                    </div>
+                    
+                    <script>
+                    function toggleDescription(event) {
+                        event.preventDefault();
+                        const moreText = event.target.previousElementSibling.querySelector('.more-text');
+                        const isVisible = moreText.style.display === 'block';
+                    
+                        moreText.style.display = isVisible ? 'none' : 'block';
+                        event.target.textContent = isVisible ? 'Read More' : 'Read Less';
+                    }
+                    </script>
+                    
+                    <div class="col-lg-3 col-md-6">
+                        <div class="d-flex flex-column text-start footer-item">
+                            <h4 class="text-light mb-3">Shop Info</h4>
+                            
+                            <a href="{% url 'contact' %}" class="btn-link">Contact</a>
+                                                        
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-6">
+                        <div class="d-flex flex-column text-start footer-item">
+                            <h4 class="text-light mb-3">Account</h4>
+                            <a href="{% url 'login' %}" class="btn-link">Login</a>
+                            <a href="{% url 'shop' %}" class="btn-link">Shop</a>
+                            <a href="{% url 'cart' %}" class="btn-link">Cart</a>
+                        
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-6">
+                        <div class="footer-item">
+                            <h4 class="text-light mb-3">Contact</h4>
+                            <p>Address: Kaniyamkattil Eramalloor P O Cherthala, Alappuzha</p>
+                            <p>Email: amruthakunjan2001@gmail.com</p>
+                            <p>Phone: 9567957236</p>
+                            <p>Payment Accepted</p>
+                            <img src="{% static 'img/payment.png' %}" class="img-fluid" alt="">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+       
+
+
+        
+
+        
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="{% static 'lib/easing/easing.min.js' %}"></script>
+    <script src="{% static 'lib/waypoints/waypoints.min.js' %}"></script>
+    <script src="{% static 'lib/lightbox/js/lightbox.min.js' %}"></script>
+    <script src="{% static 'lib/owlcarousel/owl.carousel.min.js' %}"></script>
+
+    <script src="{% static 'js/main.js' %}"></script>
+    </body>
+
+</html>

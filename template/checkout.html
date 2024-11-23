@@ -1,0 +1,426 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+        <meta charset="utf-8">
+        <title>Sreekrishna Pappad - Pappad Website Template</title>
+        <meta content="width=device-width, initial-scale=1.0" name="viewport">
+        <meta content="" name="keywords">
+        <meta content="" name="description">
+
+        
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&family=Raleway:wght@600;800&display=swap" rel="stylesheet"> 
+
+        
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css"/>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
+
+        <link href="{% static 'lib/lightbox/css/lightbox.min.css' %}" rel="stylesheet">
+        <link href="{% static 'lib/owlcarousel/assets/owl.carousel.min.css' %}" rel="stylesheet">
+
+
+        <link href="{% static 'css/bootstrap.css' %}" rel="stylesheet">
+
+        
+        <link href="{% static 'css/style.css' %}" rel="stylesheet">
+        <style>
+            .form-container {
+                max-width: 600px; 
+                width: 100%;
+                margin: 0 auto; 
+            }
+                                .modern-table {
+                                    width: 100%;
+                                    border-collapse: collapse;
+                                    font-family: Arial, sans-serif;
+                                }
+                            
+                                .modern-table thead th {
+                                    background-color: #f8f9fa;
+                                    font-weight: bold;
+                                    padding: 12px 15px;
+                                    border-bottom: 2px solid #dee2e6;
+                                    text-align: left;
+                                }
+                            
+                                .modern-table tbody td {
+                                    padding: 12px 15px;
+                                    border-bottom: 1px solid #dee2e6;
+                                }
+                            
+                                .modern-table tbody tr:last-child td {
+                                    border-bottom: none;
+                                }
+                            
+                                .total-row {
+                                    font-weight: bold;
+                                }
+                            
+                                .total-row td {
+                                    padding-top: 20px;
+                                    border-top: 2px solid #dee2e6;
+                                }
+                            
+                                .form-check {
+                                    margin-top: 15px;
+                                }
+                            
+                                .btn-submit {
+                                    padding: 12px 20px;
+                                    background-color: #D2691E;
+                                    color: white;
+                                    border: none;
+                                    cursor: pointer;
+                                    width: 100%;
+                                    text-transform: uppercase;
+                                    font-weight: bold;
+                                    margin-top: 20px;
+                                }
+                            
+                                .btn-submit:hover {
+                                    background-color: #D2691E;
+                                }
+
+
+                                .btn-submit {
+    padding: 12px 20px;
+    background-color: #D2691E;
+    color: white;
+    border: none;
+    cursor: pointer;
+    width: 100%;
+    text-transform: uppercase;
+    font-weight: bold;
+    margin-top: 20px;
+}
+
+.btn-submit:hover {
+    background-color: #D2691E;
+}
+
+
+
+
+
+                            
+        </style>
+
+ 
+    </head>
+
+    <body>
+
+        
+
+        <div class="container-fluid fixed-top">
+            <div class="container topbar bg-primary d-none d-lg-block">
+               
+            </div>
+            <div class="container px-0">
+                <nav class="navbar navbar-light bg-white navbar-expand-xl">
+                    <a href="{% url 'index' %}" class="navbar-brand"><h1 class="text-primary display-6">Sreekrishna Pappad</h1></a>
+                    <button class="navbar-toggler py-2 px-3" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
+                        <span class="fa fa-bars text-primary"></span>
+                    </button>
+                    <div class="collapse navbar-collapse bg-white" id="navbarCollapse">
+                        <div class="navbar-nav mx-auto">
+                            <a href="{% url 'index' %}" class="nav-item nav-link">Home</a>
+                            <a href="{% url 'shop' %}" class="nav-item nav-link">Shop</a>
+                            <div class="nav-item dropdown">
+                                <a href="#" class="nav-link dropdown-toggle active" data-bs-toggle="dropdown">Pages</a>
+                                <div class="dropdown-menu m-0 bg-secondary rounded-0">
+                                    <a href="{% url 'cart' %}" class="dropdown-item">Cart</a>
+                                    <a href="{% url 'checkout' %}" class="dropdown-item active">Checkout</a>
+                                    
+                                </div>
+                            </div>
+                            <a href="{% url 'contact' %}" class="nav-item nav-link">Contact</a>
+                        </div>
+                        
+                            
+                        </div>
+                    </div>
+                </nav>
+            </div>
+        </div>
+
+
+        
+        <div class="container-fluid page-header py-5">
+            <h1 class="text-center text-white display-6">Checkout</h1>
+            <ol class="breadcrumb justify-content-center mb-0">
+                <li class="breadcrumb-item"><a href="#">Home</a></li>
+                <li class="breadcrumb-item"><a href="#">Pages</a></li>
+                <li class="breadcrumb-item active text-white">Checkout</li>
+            </ol>
+        </div>
+
+
+<div class="container py-5 d-flex justify-content-center align-items-center">
+    <div class="form-container border rounded p-4 shadow" style="width: 100%; max-width: 600px;">
+        <h2 class="mb-4 text-center">Billing Details</h2>
+        
+        <form id="billingForm" method="POST" action="{% url 'checkout' %}">
+            {% csrf_token %}
+            <div class="row g-5">
+                <div class="col-md-12">
+                    <div class="form-item">
+                        <label class="form-label my-3">User Name<sup>*</sup></label>
+                        <input type="text" name="billing_name" class="form-control" value="{{ address.name }}" required pattern="[A-Za-z\s]+" title="Please enter a valid name (alphabets only).">
+                    </div>
+
+                    <div class="form-item">
+                        <label class="form-label my-3">Address<sup>*</sup></label>
+                        <input type="text" name="billing_street" class="form-control" placeholder="House Number Street Name" value="{{ address.street }}" required>
+                    </div>
+
+                    <div class="form-item">
+                        <label class="form-label my-3">Town/City<sup>*</sup></label>
+                        <select name="billing_city" class="form-control" required>
+                            <option value="">Select District</option>
+                            <option value="kasargod">Kasargod</option>
+                            <option value="kannur">Kannur</option>
+                            <option value="wayanad">Wayanad</option>
+                            <option value="kozhikode">Kozhikode</option>
+                            <option value="malappuram">Malappuram</option>
+                            <option value="palakkad">Palakkad</option>
+                            <option value="thrissur">Thrissur</option>
+                            <option value="ernakulam">Ernakulam</option>
+                            <option value="idukki">Idukki</option>
+                            <option value="kottayam">Kottayam</option>
+                            <option value="alappuzha">Alappuzha</option>
+                            <option value="pathanamthitta">Pathanamthitta</option>
+                            <option value="kollam">Kollam</option>
+                            <option value="trivandrum">Thiruvananthapuram</option>
+                        </select>
+                    </div>
+
+                    <div class="form-item">
+                        <label class="form-label my-3">Postcode<sup>*</sup></label>
+                        <input type="text" name="billing_postcode" id="postcode" class="form-control" value="{{ address.postcode }}" required placeholder="6xxxxxx" pattern="^6[0-9]{5}$" title="Kerala postcode must be 6 digits starting with '6'">
+                        <span class="error-message" id="postcodeError" style="color: red; display: none;">Please enter a valid Kerala postcode (6 digits starting with 6).</span>
+                    </div>
+
+                    <div class="form-item">
+                        <label class="form-label my-3">Mobile<sup>*</sup></label>
+                        <input type="tel" name="billing_phone" id="phone" class="form-control" value="{{ address.phone }}" required placeholder="10-digit mobile number" pattern="^\d{10}$" title="Enter a valid 10-digit mobile number.">
+                        <span class="error-message" id="phoneError" style="color: red; display: none;">Please enter a valid 10-digit mobile number.</span>
+                    </div>
+
+                    <div class="form-item">
+                        <label class="form-label my-3">Email Address<sup>*</sup></label>
+                        <input type="email" name="billing_email" id="email" class="form-control" placeholder="example@example.com" required>
+                        <span class="error-message" id="emailError" style="color: red; display: none;">Please enter a valid email address.</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="table-container mt-4">
+                <table class="modern-table">
+                    <thead>
+                        <tr>
+                            <th>Products</th>
+                            <th>Name</th>
+                            <th>Price</th>
+                            <th>Quantity</th>
+                            <th>Total</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for item in cart_items %}
+                        <tr>
+                            <td>
+                                <img src="{{ item.product.image.url }}" style="width: 90px; height: 90px; border-radius: 50%;" alt="">
+                            </td>
+                            <td>{{ item.product.name }}</td>
+                            <td>₹{{ item.product.price }}</td>
+                            <td>{{ item.quantity }}</td>
+                            <td>₹{{ item.total_price|floatformat:2 }}</td>
+                        </tr>
+                        {% empty %}
+                        <tr>
+                            <td colspan="5" style="text-align:center;">No items in the cart.</td>
+                        </tr>
+                        {% endfor %}
+                        <tr class="total-row">
+                            <td colspan="4" style="text-align:right;">Total Price:</td>
+                            <td>₹{{ total_price }}</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <div class="form-check mt-4">
+                    <input type="checkbox" id="Shipping-1" name="Shipping-1" checked>
+                    <label for="Shipping-1">Free Shipping</label>
+                </div>
+
+                <div class="row g-4 text-center align-items-center justify-content-center pt-4">
+                    <button type="submit" class="btn border-secondary py-3 px-4 text-uppercase w-50 text-primary">Place Order</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+
+
+        <div class="container-fluid bg-dark text-white-50 footer pt-5 mt-5">
+            <div class="container py-5">
+                <div class="pb-4 mb-4" style="border-bottom: 1px solid rgba(226, 175, 24, 0.5) ;">
+                    <div class="row g-4">
+                        <div class="d-flex justify-content-center align-items-center flex-column">
+                            <a href="#" class="text-center">
+                                <h1 class="text-primary mb-0">Sreekrishna Pappad</h1>
+                                <p class="text-secondary mb-0">Homemade Products</p>
+                            </a>
+                        </div>
+                        
+                       
+                    </div>
+                </div>
+                <div class="row g-5">
+                    <div class="col-lg-3 col-md-6">
+                        <div class="footer-item">
+                            <h4 class="text-light mb-3">Why People Love Us!</h4>
+                            <p class="mb-4 short-description">
+                                Our pappadams are crafted with the finest ingredients and traditional recipes, ensuring each bite is a delightful experience. Here’s why our customers keep coming back:
+                                <span class="more-text" style="display: none;">
+                                    Authentic Taste: Enjoy the rich flavors that remind you of home-cooked meals.<br>
+                                    Quality Ingredients: We use only the best, all-natural ingredients with no preservatives.<br>
+                                    Crispy Perfection: Our pappadams are expertly roasted to achieve that perfect crunch.<br>
+                                    Versatile Snack: Perfect as a standalone snack or paired with your favorite dips and dishes.<br>
+                                    Discover the joy of snacking with us!
+                                </span>
+                            </p>
+                            <a href="#" class="btn border-secondary py-2 px-4 rounded-pill text-primary" onclick="toggleDescription(event)">Read More</a>
+                        </div>
+                    </div>
+                    
+                    <script>
+                    function toggleDescription(event) {
+                        event.preventDefault();
+                        const moreText = event.target.previousElementSibling.querySelector('.more-text');
+                        const isVisible = moreText.style.display === 'block';
+                    
+                        moreText.style.display = isVisible ? 'none' : 'block';
+                        event.target.textContent = isVisible ? 'Read More' : 'Read Less';
+                    }
+                    </script>
+                    
+                    <div class="col-lg-3 col-md-6">
+                        <div class="d-flex flex-column text-start footer-item">
+                            <h4 class="text-light mb-3">Shop Info</h4>
+                            
+                            <a href="{% url 'contact' %}" class="btn-link">Contact</a>
+                                                        
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-6">
+                        <div class="d-flex flex-column text-start footer-item">
+                            <h4 class="text-light mb-3">Account</h4>
+                            <a href="{% url 'login' %}" class="btn-link">Login</a>
+                            <a href="{% url 'shop' %}" class="btn-link">Shop</a>
+                            <a href="{% url 'cart' %}" class="btn-link">Cart</a>
+                        
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-6">
+                        <div class="footer-item">
+                            <h4 class="text-light mb-3">Contact</h4>
+                            <p>Address: Kaniyamkattil Eramalloor P O Cherthala, Alappuzha</p>
+                            <p>Email: amruthakunjan2001@gmail.com</p>
+                            <p>Phone: 9567957236</p>
+                            <p>Payment Accepted</p>
+                            <img src="{% static 'img/payment.png' %}" class="img-fluid" alt="">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+       
+
+
+        
+
+      
+        
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="{% static 'lib/easing/easing.min.js' %}"></script>
+    <script src="{% static 'lib/waypoints/waypoints.min.js' %}"></script>
+    <script src="{% static 'lib/lightbox/js/lightbox.min.js' %}"></script>
+    <script src="{% static 'lib/owlcarousel/owl.carousel.min.js' %}"></script>
+
+    <script src s="{%static 'js/main.js' %}"></script>
+
+
+
+  
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const postcodeInput = document.getElementById('postcode');
+        const phoneInput = document.getElementById('phone');
+        const emailInput = document.getElementById('email');
+        
+        postcodeInput.addEventListener('input', function() {
+            const postcodePattern = /^6[0-9]{5}$/;
+            const postcodeError = document.getElementById('postcodeError');
+            if (!postcodePattern.test(postcodeInput.value)) {
+                postcodeError.style.display = 'block';
+            } else {
+                postcodeError.style.display = 'none';
+            }
+        });
+        
+        phoneInput.addEventListener('input', function() {
+            const phonePattern = /^\d{10}$/;
+            const phoneError = document.getElementById('phoneError');
+            if (!phonePattern.test(phoneInput.value)) {
+                phoneError.style.display = 'block';
+            } else {
+                phoneError.style.display = 'none';
+            }
+        });
+        
+        emailInput.addEventListener('input', function() {
+            const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            const emailError = document.getElementById('emailError');
+            if (!emailPattern.test(emailInput.value)) {
+                emailError.style.display = 'block';
+            } else {
+                emailError.style.display = 'none';
+            }
+        });
+        
+        document.getElementById('billingForm').addEventListener('submit', function(e) {
+            let valid = true;
+
+            if (!/^6[0-9]{5}$/.test(postcodeInput.value)) {
+                document.getElementById('postcodeError').style.display = 'block';
+                valid = false;
+            }
+
+            if (!/^\d{10}$/.test(phoneInput.value)) {
+                document.getElementById('phoneError').style.display = 'block';
+                valid = false;
+            }
+
+            if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(emailInput.value)) {
+                document.getElementById('emailError').style.display = 'block';
+                valid = false;
+            }
+
+            if (!valid) {
+                e.preventDefault(); 
+            }
+        });
+    });
+</script>
+
+
+    </body>
+
+</html>

@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(120deg, #f6d365 0%, #fda085 100%); 
+        }
+    
+        .payment-wrapper {
+            max-width: 500px;
+            margin: 50px auto;
+            background-color: #ffffff;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            padding: 30px;
+            border-radius: 10px;
+        }
+    
+        h2 {
+            color: #333333;
+            font-weight: 600;
+            margin-bottom: 20px;
+        }
+    
+        p {
+            color: #555555;
+        }
+    
+        .payment-details {
+            font-size: 1.2rem;
+            color: #D2691E;
+            font-weight: bold;
+        }
+    
+        .razorpay-payment-button {
+            background-color: #D2691E;
+            color: white;
+            font-weight: 600;
+            border: none;
+            border-radius: 5px;
+            padding: 10px 20px;
+            margin-top: 20px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+    
+        .razorpay-payment-button:hover {
+            background-color: #D2691E;
+        }
+    
+        .secure-notice {
+            margin-top: 15px;
+            color: #888888;
+            font-size: 0.9rem;
+            text-align: center;
+        }
+    
+        .store-logo {
+            width: 80px;
+            display: block;
+            margin: 0 auto 20px auto;
+        }
+    </style>
+    
+</head>
+<body>
+    <div class="container payment-wrapper text-center">
+        <img src="https://example.com/your_logo.jpg" alt="Pappad Store" class="store-logo">
+        <h2>Complete Your Payment</h2>
+        <p>You're just one step away from completing your order. Pay securely for your purchase of <span class="payment-details">₹{{ amount|floatformat:0 }}</span>.</p>
+
+        <form id="razorpay-form" method="POST">
+            {% csrf_token %}
+            <input type="hidden" name="order_id" value="{{ order_id }}">
+            <input type="hidden" name="amount" value="{{ amount }}">
+        </form>
+
+        <form action="{% url 'payment_success' %}" method="POST">
+            {% csrf_token %}
+            <script
+                src="https://checkout.razorpay.com/v1/checkout.js"
+                data-key="{{ razorpay_merchant_key }}"
+                data-amount="{{ amount }}"
+                data-currency="{{ currency }}"
+                data-order_id="{{ razorpay_order_id }}"
+                data-buttontext="Pay with Razorpay"
+                 data-name="Pappad Store"
+                data-description="Complete your order"
+                data-image="https://example.com/your_logo.jpg"
+                data-prefill.name="{{ request.user.get_full_name }}"
+                data-prefill.email="{{ request.user.email }}"
+                data-theme.color="#F37254"
+            ></script>
+            <input type="hidden" custom="Hidden Element" name="hidden">
+        </form>
+
+        <div class="secure-notice">Your payment is secured by Razorpay. We do not store any payment details.</div>
+    </div>
+</body>
+</html>

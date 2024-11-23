@@ -1,0 +1,319 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Admin Dashboard</title>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <meta content="" name="keywords">
+    <meta content="" name="description">
+
+    
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
+
+    
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+
+    
+    <link rel="stylesheet" href="https://cdn.datatables.net/2.1.2/css/dataTables.dataTables.css" />
+    <script src="https://cdn.datatables.net/2.1.2/js/dataTables.js"></script>
+
+    
+    <link href="{% static 'aimg/favicon.ico' %}" rel="icon">
+
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com/">
+    <link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+
+    
+    <link href="{% static 'acss/style.css' %}" rel="stylesheet">
+
+    
+    <style>
+        body {
+            font-family: 'Heebo', sans-serif;
+        }
+        .sidebar {
+            width: 250px;
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 100%;
+            background-color: #f8f9fa;
+            border-right: 1px solid #ddd;
+        }
+        .sidebar .navbar-brand h6 {
+            font-size: 1.25rem;
+        }
+        .sidebar .nav-link.active {
+            background-color: #007bff;
+            color: #fff;
+        }
+        .content {
+            margin-left: 250px;
+            padding: 20px;
+        }
+        .table th, .table td {
+            text-align: center;
+        }
+        .table td a {
+            margin: 0 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container-xxl position-relative bg-white d-flex">
+        
+        <div class="sidebar">
+            <nav class="navbar bg-light navbar-light">
+                <a href="{% url 'index' %}" class="navbar-brand mx-4 mb-3">
+                    <h6 class="text-primary"><i class="fa fa-hashtag me-2"></i>Sreekrishna Pappad</h6>
+                </a>
+                
+                <div class="d-flex align-items-center ms-4 mb-4">
+                    <div class="navbar-nav w-100">
+                    
+                        <div class="nav-item dropdown position-relative">
+                            <a href="{% url 'blank' %}" class="nav-link dropdown-toggle {% if active_nav == 'admin' %}active{% endif %}" data-bs-toggle="dropdown" aria-expanded="false">
+                                <i class="fa fa-user-tie me-2" style="font-size: 1.2em;"></i>
+                                <span class="d-inline-flex align-items-center">Admin</span>
+                            </a>
+                            
+                            <div class="dropdown-menu dropdown-menu-end bg-light border-0 rounded-0 rounded-bottom mt-2">
+                                <a href="#" class="dropdown-item">My Profile</a>
+                                <a href="#" class="dropdown-item">Settings</a>
+                                {% if user.is_authenticated %}
+                                <a href="{% url 'logout' %}" class="dropdown-item">Log Out</a>
+                                {% endif %}
+                            </div>
+                        </div>
+                        
+                        <a href="{% url 'user_management' %}" class="nav-item nav-link {% if active_nav == 'users' %}active{% endif %}">
+                            <i class="fa fa-user-cog me-2"></i>Users
+                        </a>
+                        
+                        <a href="{% url 'product_management' %}" class="nav-item nav-link {% if active_nav == 'products' %}active{% endif %}">
+                            <i class="fa fa-clipboard-list me-2"></i>Products
+                        </a>
+                       
+                        <a href="{% url 'order_management' %}" class="nav-item nav-link {% if active_nav == 'orders' %}active{% endif %}">
+                            <i class="fa fa-shopping-cart me-2"></i>Orders
+                        </a>
+                        <a href="{% url 'delivery_boy_management' %}" class="nav-item nav-link {% if active_nav == 'delivery_boys' %}active{% endif %}">
+                            <i class="fa fa-motorcycle" style="font-size:24px"></i>Delivery Boys
+                        </a>
+                        
+                    </div>
+                </div>
+            </nav>
+        </div>
+
+        <div class="content">
+            {% if active_nav == 'delivery_boys' %}
+                <h3 class="text-center my-4">Delivery Boys Management</h3>
+                {% if delivery_boys %}
+                    <div class="table-responsive">
+                        <table id="deliveryTable" class="table table-success table-striped table-hover border border-primary border-2">
+                            <thead class="thead-dark">
+                                <tr>
+                                    <th><center>ID</center></th>
+                                    <th><center>User</center></th>
+                                    <th><center>Status</center></th>
+                                    <th><center>Actions</center></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for delivery_boy in delivery_boys %}
+                                <tr>
+                                    <td><center>{{ delivery_boy.id }}</center></td>
+                                    <td><center>{{ delivery_boy.user.username }}</center></td>
+                                    <td>
+                                        <form action="{% url 'update_delivery_boy' delivery_boy.id %}" method="POST" class="form-inline">
+                                            {% csrf_token %}
+                                            <select name="status" class="form-control" onchange="this.form.submit()">
+                                                <option value="offline" {% if delivery_boy.status == 'offline' %}selected{% endif %}>Offline</option>
+                                                <option value="available" {% if delivery_boy.status == 'available' %}selected{% endif %}>Available</option>
+                                                <option value="on_route" {% if delivery_boy.status == 'on_route' %}selected{% endif %}>On Route</option>
+                                            </select>
+                                        </form>
+                                    </td>
+                                    <td>
+                                        <form action="{% url 'delete_delivery_boy' delivery_boy.id %}" method="POST" style="display:inline;">
+                                            {% csrf_token %}
+                                            <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                                        </form>
+                                        <a href="{% url 'view_delivery_boy_details' delivery_boy.id %}" class="btn btn-info btn-sm">View Details</a>
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                {% else %}
+                    <p class="text-center">No delivery boys available.</p>
+                
+            {% endif %}
+        </div>
+        
+        
+                
+
+
+            {% elif active_nav == 'users' %}
+                <h3 class="text-center my-4" >User Management</h3>
+                {% if values %}
+                    <table id="myTable" class="table table-success table-striped table-hover border border-primary border-2">
+                        <thead>
+                            <tr>
+                                <th scope="col"><center>ID</center></th>
+                                <th scope="col"><center>Username</center></th>
+                                <th scope="col"><center>Email</center></th>
+                                <th scope="col"><center>Actions</center></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for i in values %}
+                            <tr>
+                                <th scope="row"><center>{{ i.id }}</center></th>
+                                <td><center>{{ i.username }}</center></td>
+                                <td><center>{{ i.email }}</center></td>
+                                <td>
+                                    <a href="{% url 'edit_user' i.pk %}" class="btn btn-primary">Edit</a>
+                                    <a href="{% url 'delete_user' i.pk %}" class="btn btn-danger">Delete</a>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                {% else %}
+                    <p>No users available.</p>
+                {% endif %}
+        
+            {% elif active_nav == 'products' %}
+                <h3 class="text-center my-4">Product Management</h3>
+                <a href="{% url 'product_create' %}" class="btn btn-primary mb-3" >Add Product</a>
+                <table id="productTable" class="table table-success table-striped table-hover border border-primary border-2">
+                    <thead>
+                        <tr>
+                            <th><center>Name</center></th>
+                            <th><center>Category</center></th>
+                            <th><center>Description</center></th>
+                            <th><center>Price</center></th>
+                            <th><center>Stock</center></th>
+                            <th><center>Image</center></th>
+                            <th><center>Actions</center></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for product in products %}
+                        <tr>
+                            <td><center>{{ product.name }}</center></td>
+                            <td><center>{{ product.category }}</center></td>
+                            <td><center>{{ product.description }}</center></td>
+                            <td><center>{{ product.price }}</center></td>
+                            <td><center>{{ product.stock }}</center></td>
+                            <td>
+                                {% if product.image %}
+                                    <img src="{{ product.image.url }}" alt="{{ product.name }} - Front" style="max-width: 100px; max-height: 100px;">
+                                {% else %}
+                                    No image
+                                {% endif %}
+                            </td>
+                            <td>
+                                <a href="{% url 'product_edit' product.pk %}" class="btn btn-primary">Edit</a>
+                                <a href="{% url 'product_delete' product.pk %}" class="btn btn-danger">Delete</a>
+                            </td>
+                        </tr>
+                        {% empty %}
+                        <tr>
+                            <td colspan="7">No products found.</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+        
+                {% elif active_nav == 'orders' %}
+                <h3 class="text-center my-4">Order Management</h3>
+                {% if orders %}
+                    <table id="myTable" class="table table-success table-striped table-hover border border-primary border-2">
+                        <thead>
+                            <tr>
+                                <th scope="col"><center>Order ID</center></th>
+                                <th scope="col"><center>User</center></th>
+                                <th scope="col"><center>Address</center></th>
+                                <th scope="col"><center>Total Amount</center></th>
+                                <th scope="col"><center>Order Date</center></th>
+                                <th scope="col"><center>Status</center></th>
+                                <th scope="col"><center>Details</center></th> 
+                                <th scope="col"><center>Actions</center></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for order in orders %}
+                            <tr>
+                                <th scope="row"><center>{{ order.id }}</center></th>
+                                <td><center>{{ order.user.username }}</center></td>
+                                <td>
+                                    {% if order.address %}
+                                        {{ order.address.street }}<br>
+                                    {% else %}
+                                        No address available
+                                    {% endif %}
+                                </td>
+                                <td><center>{{ order.total_amount }}</center></td>
+                                <td><center>{{ order.order_date }}</center></td>
+                                <td><center>{{ order.status }}</center></td>
+                
+                                <td>
+                                    <a href="{% url 'order_details' order.id %}" class="btn btn-info">View Details</a>
+                                </td>
+                
+                                <td>
+                                    <form action="{% url 'delete_order' order.pk %}" method="POST" style="display:inline;">
+                                        {% csrf_token %}
+                                        <button type="submit" class="btn btn-danger">Delete</button>
+                                    </form>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                {% else %}
+                    <p>No orders available.</p>
+                {% endif %}
+                {% else %}
+                    <p>No section selected.</p>
+                {% endif %}
+                
+        
+    
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $('#myTable').DataTable();
+        });
+    </script>
+    <script>
+        $(document).ready(function() {
+            $('#orderTable').DataTable();
+        });
+    </script>
+    <script>
+        $(document).ready(function() {
+            $('#deliveryTable').DataTable();
+        });
+    </script>
+    <script>
+        $(document).ready(function() {
+            $('#productTable').DataTable();
+        });
+    </script>
+
+</body>
+</html>

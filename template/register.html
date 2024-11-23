@@ -1,0 +1,262 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/5.3.0/css/bootstrap.min.css">
+    <title>Document</title>
+    <style>
+         .error {
+            color: red;
+            font-size: 0.875em;
+            margin-top: 0.25rem;
+        }
+        .gradient-custom-3 {
+            
+            background: #84fab0;
+
+            background: -webkit-linear-gradient(to right, rgba(132, 250, 176, 0.5), rgba(143, 211, 244, 0.5));
+
+            background: linear-gradient(to right, rgba(132, 250, 176, 0.5), rgba(143, 211, 244, 0.5))
+        }
+        .gradient-custom-4 {
+            background: #84fab0;
+
+            background: -webkit-linear-gradient(to right, rgba(132, 250, 176, 1), rgba(143, 211, 244, 1));
+
+            background: linear-gradient(to right, rgba(132, 250, 176, 1), rgba(143, 211, 244, 1))
+        }
+        .fade-out {
+            opacity: 1;
+            transition: opacity 1s ease-out;
+        }
+        .fade-out.hidden {
+            opacity: 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="bg-light py-3 py-md-5">
+        <div class="container">
+            <div class="row justify-content-md-center">
+                <div class="col-12 col-md-11 col-lg-8 col-xl-7 col-xxl-6">
+                    <div class="bg-green p-4 p-md-5 rounded shadow-sm">
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="mb-5">
+                                    <h2 class="h3"><center>Registration</center></h2>
+                                </div>
+                            </div>
+                        </div>
+
+                        {% if messages %}
+                          <div class="alert alert-info fade-out" id="messageContainer">
+                            {% for message in messages %}
+                              <div>{{ message }}</div>
+                            {% endfor %}
+                          </div>
+                        {% endif %}
+
+                        <form id="registrationForm" action="" method="post" enctype="multipart/form-data">
+
+                          {% csrf_token %}
+                          <div class="row gy-3 gy-md-4 overflow-hidden">
+                              <div class="col-12">
+                                  <label for="firstName" class="form-label">First Name <span class="text-danger">*</span></label>
+                                  <input type="text" class="form-control" name="firstName" id="firstName" placeholder="First Name" required>
+                                  <div id="firstNameError" class="error"></div>
+                              </div>
+                              <div class="col-12">
+                                  <label for="lastName" class="form-label">Last Name <span class="text-danger">*</span></label>
+                                  <input type="text" class="form-control" name="lastName" id="lastName" placeholder="Last Name" required>
+                                  <div id="lastNameError" class="error"></div>
+                              </div>
+
+                              <div class="col-12">
+                                  <label for="email" class="form-label">Email <span class="text-danger">*</span></label>
+                                  <input type="email" class="form-control" name="email" id="email" required>
+                                  <div id="emailError" class="error"></div>
+                              </div>
+                              <div class="col-12">
+                                  <label for="password" class="form-label">Password <span class="text-danger">*</span></label>
+                                  <input type="password" class="form-control" name="password" id="password" required>
+                                  <div id="passwordError" class="error"></div>
+                              </div>
+                              
+                              <div class="col-12">
+                                <label class="form-label">Register As <span class="text-danger">*</span></label>
+                                <select class="form-select" name="role" required>
+                                    <option value="user">User</option>
+                                    <option value="delivery_boy">Delivery Boy</option>
+                                </select>
+                            </div>
+
+                            <div class="col-12" id="deliveryDetails" style="display:none;">
+                              <div class="mb-3">
+                                  <label for="license_photo" class="form-label">Upload License Photo</label>
+                                  <input type="file" class="form-control" name="license_photo" id="license_photo" accept="image/*" required>
+                              </div>
+                              <div class="mb-3">
+                                  <label for="rc_book_photo" class="form-label">Upload RC Book Photo</label>
+                                  <input type="file" class="form-control" name="rc_book_photo" id="rc_book_photo" accept="image/*" required>
+                              </div>
+
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" name="description" id="description" required>
+                                    <label class="form-check-label text-secondary" for="description">
+                                        I am willing to work in the shop as per the company's requirements.
+                                    </label>
+                                </div>
+
+                                <div class="form-check mt-3">
+                                    <input class="form-check-input" type="checkbox" name="shift_time" id="shift_time" required>
+                                    <label class="form-check-label text-secondary" for="shift_time">
+                                        I agree to work in shifts from 8 AM to 10 PM if required.
+                                    </label>
+                                </div>
+                            </div>
+
+                            <div class="col-12">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="" name="iAgree" id="iAgree" required>
+                                    <label class="form-check-label text-secondary" for="iAgree">
+                                        I agree to the terms and conditions
+                                    </label>
+                                </div>
+                            </div>
+
+                            <div class="col-12">
+                                <div class="d-grid">
+                                    <button class="btn btn-lg btn-primary" type="submit">Register</button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                  </div>
+              </div>
+          </div>
+      </div>
+  </div>
+
+  <script>
+    document.getElementById('registrationForm').addEventListener('change', function () {
+        const role = document.querySelector('select[name="role"]').value;
+        const deliveryDetails = document.getElementById('deliveryDetails');
+        const licensePhoto = document.getElementById('license_photo');
+        const rcBookPhoto = document.getElementById('rc_book_photo');
+        const descriptionCheckbox = document.getElementById('description');
+        const shiftTimeCheckbox = document.getElementById('shift_time');
+
+        if (role === 'delivery_boy') {
+            deliveryDetails.style.display = 'block';
+            licensePhoto.required = true;
+            rcBookPhoto.required = true;
+            descriptionCheckbox.required = true;
+            shiftTimeCheckbox.required = true;
+        } else {
+            deliveryDetails.style.display = 'none';
+            licensePhoto.required = false;
+            rcBookPhoto.required = false;
+            descriptionCheckbox.required = false;
+            shiftTimeCheckbox.required = false;
+        }
+    });
+</script>
+
+<script>
+    document.addEventListener('DOMContentLoaded', (event) => {
+        var messageContainer = document.getElementById('messageContainer');
+        if (messageContainer) {
+            setTimeout(function() {
+                messageContainer.classList.add('hidden');
+            }, 3000);
+        }
+    });
+</script>
+
+<script>
+    const form = document.getElementById('registrationForm');
+    const firstNameInput = document.getElementById('firstName');
+    const lastNameInput = document.getElementById('lastName');
+    const emailInput = document.getElementById('email');
+    const passwordInput = document.getElementById('password');
+    const iAgreeCheckbox = document.getElementById('iAgree');
+
+    const firstNameError = document.getElementById('firstNameError');
+    const lastNameError = document.getElementById('lastNameError');
+    const emailError = document.getElementById('emailError');
+    const passwordError = document.getElementById('passwordError');
+    const iAgreeError = document.getElementById('iAgreeError');
+
+    function validateFirstName() {
+        if (!firstNameInput.value.trim()) {
+            firstNameError.textContent = 'First Name is required.';
+        } else {
+            firstNameError.textContent = '';
+        }
+    }
+
+    function validateLastName() {
+        if (!lastNameInput.value.trim()) {
+            lastNameError.textContent = 'Last Name is required.';
+        } else {
+            lastNameError.textContent = '';
+        }
+    }
+
+    function validateEmail() {
+        const email = emailInput.value.trim();
+        const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!email) {
+            emailError.textContent = 'Email is required.';
+        } else if (!emailPattern.test(email)) {
+            emailError.textContent = 'Email must be a valid email address.';
+        } else {
+            emailError.textContent = '';
+        }
+    }
+
+    function validatePassword() {
+        const password = passwordInput.value.trim();
+        const passwordPattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%?&])[A-Za-z\d@$!%?&]{8,}$/;
+        if (!password) {
+            passwordError.textContent = 'Password is required.';
+        } else if (!passwordPattern.test(password)) {
+            passwordError.textContent = 'Password must be at least 8 characters long, include at least one lowercase letter, one uppercase letter, one number, and one special character.';
+        } else {
+            passwordError.textContent = '';
+        }
+    }
+
+    function validateIAgree() {
+        if (!iAgreeCheckbox.checked) {
+            iAgreeError.textContent = 'You must agree to the terms and conditions.';
+        } else {
+            iAgreeError.textContent = '';
+        }
+    }
+
+    firstNameInput.addEventListener('input', validateFirstName);
+    lastNameInput.addEventListener('input', validateLastName);
+    emailInput.addEventListener('input', validateEmail);
+    passwordInput.addEventListener('input', validatePassword);
+    iAgreeCheckbox.addEventListener('change', validateIAgree);
+
+    form.addEventListener('submit', function(event) {
+        validateFirstName();
+        validateLastName();
+        validateEmail();
+        validatePassword();
+        validateIAgree();
+
+        if (firstNameError.textContent || lastNameError.textContent || emailError.textContent || passwordError.textContent || iAgreeError.textContent) {
+            event.preventDefault();
+        }
+    });
+</script>
+
+
+
+           

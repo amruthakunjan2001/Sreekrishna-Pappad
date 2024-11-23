@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Payment Success</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        .badge {
+            font-size: 14px;
+            padding: 8px 12px;
+            border-radius: 12px;
+            color: black; 
+        }
+    
+        
+        body {
+            background: linear-gradient(120deg, #f6d365 0%, #fda085 100%); 
+        }
+    
+        .card {
+            border-radius: 10px;
+        }
+    
+        .success-message {
+            font-weight: bold;
+            font-size: 1.5rem;
+            color: #28a745; 
+        }
+    
+        .item-list {
+            list-style-type: none;
+            padding: 0;
+        }
+    
+        .item-list li {
+            margin-bottom: 10px;
+            padding: 10px;
+            background-color: #e9ecef;
+            border-radius: 5px;
+        }
+    
+        .total-amount {
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: #D2691E; 
+        }
+    </style>
+    
+    
+</head>
+<body>
+    
+    <div class="container mt-5">
+        <div class="card shadow">
+            <div class="card-body">
+                <h2 class="success-message">Payment Successful!</h2>
+                <p>Your payment has been processed successfully. Thank you for your order!</p>
+                <hr>
+                <h5>Order Details:</h5>
+                <p><strong>Order ID:</strong> {{ order.id }}</p>
+                <p><strong>Payment ID:</strong> {{ payment_id }}</p>
+                <p class="total-amount">Total Amount: ₹{{ order.total_amount }}</p>
+                <p><strong>Status:</strong> {{ order.status }}</p>
+
+                <h5>Ordered Items</h5>
+                <ul class="item-list">
+                    {% for item in order.items.all %}
+                    <li>
+                        <strong>{{ item.product.name }}</strong> - {{ item.quantity }}
+                    </li>
+                    {% endfor %}
+                </ul>
+                <a href="{% url 'shop' %}" class="btn btn-secondary">Continue Shopping</a>
+                <a href="{% url 'index' %}" class="btn btn-secondary">Back to Home</a>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

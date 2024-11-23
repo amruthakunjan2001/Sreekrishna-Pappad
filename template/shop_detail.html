@@ -1,0 +1,189 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+        <meta charset="utf-8">
+        <title>Sreekrishna Pappad - Pappad Website Template</title>
+        <meta content="width=device-width, initial-scale=1.0" name="viewport">
+        <meta content="" name="keywords">
+        <meta content="" name="description">
+
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&family=Raleway:wght@600;800&display=swap" rel="stylesheet"> 
+
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css"/>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
+
+        <link href="{% static 'lib/lightbox/css/lightbox.min.css' %}" rel="stylesheet">
+        <link href="{% static 'lib/owlcarousel/assets/owl.carousel.min.css' %}" rel="stylesheet">
+
+
+        <link href="{% static 'css/bootstrap.css' %}" rel="stylesheet">
+
+        <link href="{% static 'css/style.css' %}" rel="stylesheet">
+    </head>css
+
+    <body>
+
+        
+
+        <div class="container-fluid fixed-top">
+            <div class="container topbar bg-primary d-none d-lg-block">
+               
+            </div>
+            <div class="container px-0">
+                <nav class="navbar navbar-light bg-white navbar-expand-xl">
+                    <a href="{% url 'index' %}" class="navbar-brand"><h1 class="text-primary display-6">Sreekrishna Pappad</h1></a>
+                    <button class="navbar-toggler py-2 px-3" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
+                        <span class="fa fa-bars text-primary"></span>
+                    </button>
+                    <div class="collapse navbar-collapse bg-white" id="navbarCollapse">
+                        <div class="navbar-nav mx-auto">
+                            <a href="{% url 'index' %}" class="nav-item nav-link">Home</a>
+                            <a href="{% url 'shop' %}" class="nav-item nav-link">Shop</a>
+                            
+                            <a href="{% url 'contact' %}" class="nav-item nav-link">Contact</a>
+                        </div>
+                       
+                    </div>
+                </nav>
+            </div>
+        </div>
+
+
+       
+
+
+        <div class="container-fluid page-header py-5">
+            <h1 class="text-center text-white display-6">Shop Detail</h1>
+            <ol class="breadcrumb justify-content-center mb-0">
+                <li class="breadcrumb-item"><a href="#">Home</a></li>
+                <li class="breadcrumb-item active text-white">Shop Detail</li>
+            </ol>
+        </div>
+
+
+        <div class="container-fluid py-5 mt-5">
+            <div class="container py-5">
+                <div class="row g-4 mb-5">
+                    <div class="col-lg-8 col-xl-9">
+                        <div class="row g-4">
+                            <div class="col-lg-6">
+                                <div class="border rounded">
+                                    <a href="#">
+                                        <img src="{{ product.image.url}}" class="img-fluid rounded" alt="Image">
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <h4 class="fw-bold mb-3">{{ product.name }}</h4>
+                                <p class="mb-3">Category: {{ product.category }}</p>
+                                <h5 class="fw-bold mb-3">₹ {{ product.price }}</h5>
+                                <div class="d-flex mb-4">
+                                    <i class="fa fa-star text-secondary"></i>
+                                    <i class="fa fa-star text-secondary"></i>
+                                    <i class="fa fa-star text-secondary"></i>
+                                    <i class="fa fa-star text-secondary"></i>
+                                    <i class="fa fa-star"></i>
+                                </div>
+                                <p class="mb-4">{{ product.description }}</p>
+                                
+                                <a href="{% url 'cart' %}" class="btn border border-secondary rounded-pill px-4 py-2 mb-4 text-primary"><i class="fa fa-shopping-bag me-2 text-primary"></i> Add to cart</a>
+                            </div>
+
+                        </div>
+                    </div>
+                   
+    
+
+        <div class="container-fluid bg-dark text-white-50 footer pt-5 mt-5">
+            <div class="container py-5">
+                <div class="pb-4 mb-4" style="border-bottom: 1px solid rgba(226, 175, 24, 0.5) ;">
+                    <div class="row g-4">
+                        <div class="d-flex justify-content-center align-items-center flex-column">
+                            <a href="#" class="text-center">
+                                <h1 class="text-primary mb-0">Sreekrishna Pappad</h1>
+                                <p class="text-secondary mb-0">Homemade Products</p>
+                            </a>
+                        </div>
+                        
+                       
+                    </div>
+                </div>
+                <div class="row g-5">
+                    <div class="col-lg-3 col-md-6">
+                        <div class="footer-item">
+                            <h4 class="text-light mb-3">Why People Love Us!</h4>
+                            <p class="mb-4 short-description">
+                                Our pappadams are crafted with the finest ingredients and traditional recipes, ensuring each bite is a delightful experience. Here’s why our customers keep coming back:
+                                <span class="more-text" style="display: none;">
+                                    Authentic Taste: Enjoy the rich flavors that remind you of home-cooked meals.<br>
+                                    Quality Ingredients: We use only the best, all-natural ingredients with no preservatives.<br>
+                                    Crispy Perfection: Our pappadams are expertly roasted to achieve that perfect crunch.<br>
+                                    Versatile Snack: Perfect as a standalone snack or paired with your favorite dips and dishes.<br>
+                                    Discover the joy of snacking with us!
+                                </span>
+                            </p>
+                            <a href="#" class="btn border-secondary py-2 px-4 rounded-pill text-primary" onclick="toggleDescription(event)">Read More</a>
+                        </div>
+                    </div>
+                    
+                    <script>
+                    function toggleDescription(event) {
+                        event.preventDefault();
+                        const moreText = event.target.previousElementSibling.querySelector('.more-text');
+                        const isVisible = moreText.style.display === 'block';
+                    
+                        moreText.style.display = isVisible ? 'none' : 'block';
+                        event.target.textContent = isVisible ? 'Read More' : 'Read Less';
+                    }
+                    </script>
+                    
+                    <div class="col-lg-3 col-md-6">
+                        <div class="d-flex flex-column text-start footer-item">
+                            <h4 class="text-light mb-3">Shop Info</h4>
+                            
+                            <a href="{% url 'contact' %}" class="btn-link">Contact</a>
+                                                        
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-6">
+                        <div class="d-flex flex-column text-start footer-item">
+                            <h4 class="text-light mb-3">Account</h4>
+                            <a href="{% url 'login' %}" class="btn-link">Login</a>
+                            <a href="{% url 'shop' %}" class="btn-link">Shop</a>
+                            <a href="{% url 'cart' %}" class="btn-link">Cart</a>
+                        
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-6">
+                        <div class="footer-item">
+                            <h4 class="text-light mb-3">Contact</h4>
+                            <p>Address: Kaniyamkattil Eramalloor P O Cherthala, Alappuzha</p>
+                            <p>Email: amruthakunjan2001@gmail.com</p>
+                            <p>Phone: 9567957236</p>
+                            <p>Payment Accepted</p>
+                            <img src="{% static 'img/payment.png' %}" class="img-fluid" alt="">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+       
+
+
+
+        
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="{% static 'lib/easing/easing.min.js' %}"></script>
+    <script src="{% static 'lib/waypoints/waypoints.min.js' %}"></script>
+    <script src="{% static 'lib/lightbox/js/lightbox.min.js' %}"></script>
+    <script src="{% static 'lib/owlcarousel/owl.carousel.min.js' %}"></script>
+
+    <script src="{% static 'js/main.js' %}"></script>
+    </body>
+
+</html>
